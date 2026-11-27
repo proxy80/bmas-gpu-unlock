@@ -41,7 +41,7 @@ Download the latest release tarball from **GitHub Releases**:
     tar -xzf bmas-gpu-unlock-control-plane-1.0.0-linux-x86_64.tar.gz
     cd bmas-gpu-unlock-control-plane-1.0.0-linux-x86_64
     pip install fastapi uvicorn cryptography pydantic
-    ./run_bmas_control_plane.sh 19070
+    sudo -E ./run_bmas_control_plane.sh 19070
 
 Open `http://<host-ip>:19070` in your browser.
 
