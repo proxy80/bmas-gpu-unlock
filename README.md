@@ -68,3 +68,14 @@ Open `http://<host-ip>:19070` in your browser.
 
 * **BMAS GPU Unlock Control Plane** is proprietary software © 2026 **Bare Metal Applied Science LLC**.
 * **Upstream Kernel Module:** This control plane does **not** bundle or redistribute kernel code or NVIDIA firmware. Stage 3 invokes your local host to fetch and build upstream [Zagitta/gpu-unlock](https://github.com/Zagitta/gpu-unlock) (licensed **GPL-2.0-only**) directly on your machine.
+
+---
+
+## How to Purchase & Activate a License
+
+1. **Get Your Host Fingerprint:** Extract the release tarball, start the control plane, and visit `http://<host-ip>:19070/api/license` to copy your 32-character `fingerprint`.
+2. **Complete One-Time Payment via PayPal (`@jlastrophotographer`):**
+   * **Workstation Edition ($39 one-time, single node):** https://paypal.me/jlastrophotographer/39
+   * **Pro / Multi-GPU Fleet Edition ($129 one-time, multi-GPU node):** https://paypal.me/jlastrophotographer/129
+3. **Receive Your Key:** Include your **Host Fingerprint** and **email address** in the PayPal payment note (or send your receipt + fingerprint via LinkedIn DM).
+4. **Install License:** Place the signed `gpu_unlock_license.json` you receive into `/etc/bmas/gpu_unlock_license.json` and restart the control plane.
