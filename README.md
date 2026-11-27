@@ -34,6 +34,15 @@ All 6 post-reboot kernel verification checks (`cmdline_has_target`, `ss0_verifie
 
 ---
 
+## Supported Linux Distributions
+- **Ubuntu / Debian** (22.04 LTS, 24.04 LTS, Debian 12+)
+- **Red Hat Enterprise Linux (RHEL) / Rocky Linux** (9.x)
+- **Oracle Linux** (9.x)
+- **Fedora Workstation** (40+)
+- **SUSE / openSUSE** (Leap / Tumbleweed)
+
+> *Requires Linux kernel headers, `dkms`, `gcc`/`make`, and NVIDIA drivers installed on the target host.*
+
 ## Quick Start (Compiled Binary Release)
 
 Download the latest release tarball from **GitHub Releases**:
