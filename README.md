@@ -1,0 +1,45 @@
+# BMAS GPU Unlock Control Plane (v1.0.0)
+
+**Bare Metal Applied Science LLC** — Rollback-safe, Cython-compiled Linux workstation & fleet orchestrator for NVIDIA RTX 20/30/40 series Tensor performance unlocks, featuring an interactive SVG dashboard, `journalctl` early-boot auditor, PyTorch TFLOPS benchmarker, and pluggable Ollama/Groq AI Auto-Follow Co-Pilot.
+
+---
+
+## Verified Benchmark (RTX 3070 — Ubuntu 24.04.3 LTS / Kernel 7.0.0-44-generic)
+
+| Precision (4096×4096 `torch.matmul`) | Unlocked Throughput |
+| :--- | :--- |
+| **FP16** | **74.99 TFLOPS** |
+| **BF16** | **73.72 TFLOPS** |
+| **TF32** | **36.47 TFLOPS** |
+
+All 6 post-reboot kernel verification checks (`cmdline_has_target`, `ss0_verified`, `ss1_verified`, `unlocked_banner`, `handoff_before_nvrm`, `zero_xid_faults`) validated `PASS`.
+
+---
+
+## 5-Stage Automated Workflow
+
+1. **Pre-Flight Discovery:** Queries kernel version, OS, `lspci -nnk`, `nvidia-smi`, `dkms status`, `lsinitramfs` (`nvidia.ko` race check), `mokutil --sb-state`, and `/etc/default/grub`.
+2. **Rollback Vault:** Creates timestamped, SHA-256 verified backups of `/etc/default/grub` and `/boot/initrd.img-$(uname -r)` in `/root/bmas-gpu-unlock-backup/` with 1-click rollback and DKMS purge.
+3. **Guided Unlock & GRUB Stage:** Fetches and builds upstream `Zagitta/gpu-unlock` locally on your host and safely updates `gpu_unlock.targets=<PCI_ID>` in GRUB.
+4. **Post-Reboot `journalctl` Verifier:** Audits `journalctl -k -b` and `/proc/cmdline` for `ss0=0x88888888`, `ss1=0x8`, `gpu_unlock: unlocked`, clean handoff before `NVRM`, and zero XID faults.
+5. **PyTorch TFLOPS Proof-of-Gain & HTML Audit Report:** Runs 4096×4096 BF16/FP16/TF32 benchmarks and exports a print-safe landscape BMAS HTML Audit Report.
+
+---
+
+## Quick Start (Compiled Binary Release)
+
+Download the latest release tarball from **GitHub Releases**:
+
+    tar -xzf bmas-gpu-unlock-control-plane-1.0.0-linux-x86_64.tar.gz
+    cd bmas-gpu-unlock-control-plane-1.0.0-linux-x86_64
+    pip install fastapi uvicorn cryptography pydantic
+    ./run_bmas_control_plane.sh 19070
+
+Open `http://<host-ip>:19070` in your browser.
+
+---
+
+## Licensing & Upstream Attribution
+
+* **BMAS GPU Unlock Control Plane** is proprietary software © 2026 **Bare Metal Applied Science LLC**.
+* **Upstream Kernel Module:** This control plane does **not** bundle or redistribute kernel code or NVIDIA firmware. Stage 3 invokes your local host to fetch and build upstream [Zagitta/gpu-unlock](https://github.com/Zagitta/gpu-unlock) (licensed **GPL-2.0-only**) directly on your machine.

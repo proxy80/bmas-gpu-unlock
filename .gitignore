@@ -1,0 +1,18 @@
+# Private keys & licenses (NEVER COMMIT)
+tools/
+*.key
+*.pem
+*license*.json
+
+# Proprietary source & build artifacts
+control_plane/
+setup.py
+build_release.sh
+build/
+dist/
+*.c
+*.so
+*.pyc
+__pycache__/
+venv/
+.venv/
